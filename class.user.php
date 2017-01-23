@@ -119,7 +119,7 @@ class USER
 		$mail->Port       = 465;             
 		$mail->AddAddress($email);
 		$mail->Username="ugokingsley5@gmail.com";  
-		$mail->Password="kingsley5911";            
+		$mail->Password="my pass";            
 		$mail->SetFrom('ugokingsley5@gmail.com','DaetaCity');
 		$mail->AddReplyTo("ugokingsley5@gmail.com","DaetaCity");
 		$mail->Subject    = $subject;
