@@ -17,38 +17,7 @@ if(isset($_POST['btn-email']))
     $message = trim($_POST['message']);
     $email = 'daetacity@gmail.com';
     
-    /**
-    $stmt = $reg_user->runQuery("SELECT * FROM tbl_users WHERE userEmail=:email_id");
-    $stmt->execute(array(":email_id"=>$email));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if($stmt->rowCount() > 0)
-    {
-        $msg = "
-              <div class='alert alert-error'>
-                <button class='close' data-dismiss='alert'>&times;</button>
-                    <strong>Sorry !</strong>  email allready exists , Please Try another one
-              </div>
-              ";
-    }
-    else
-    {
-        if($reg_user->register($uname,$email,$upass,$gsm,$code))
-        {           
-            $id = $reg_user->lasdID();      
-            $key = base64_encode($id);
-            $id = $key;
-            
-            $message = "                    
-                        Hello $uname,
-                        <br /><br />
-                        Welcome to DaetaCity!<br/>
-                        To complete your registration  please , just click following link<br/>
-                        <br /><br />
-                        <a href='http://localhost/signup/verify.php?id=$id&code=$code'>Click HERE to Activate :)</a>
-                        <br /><br />
-                        Thanks,";
-            */            
+              
             $subject = $recipient.'  '.$recipient_email;
                         
             $reg_user->send_mail($email,$message,$subject); 
@@ -58,13 +27,7 @@ if(isset($_POST['btn-email']))
                         <strong>Success!</strong> your message has been sent, we will get backk to you as soon as possible. 
                     </div>
                     ";
-        //}
-       // else
-        //{
-          //  echo "sorry , Query could no execute...";
-        //}       
-    //}
-}
+        
 ?>
 
 
