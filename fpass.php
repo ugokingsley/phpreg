@@ -54,19 +54,9 @@ if(isset($_POST['btn-submit']))
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Forgot Password</title>
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-    <link href="assets/styles.css" rel="stylesheet" media="screen">
-     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
+
+<?php require_once 'assets/includes/header.php';?>
+
   <body id="login">
     <div class="container">
 
@@ -87,14 +77,18 @@ if(isset($_POST['btn-submit']))
                 <?php
 			}
 			?>
-        
-        <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
+        <div class="form-group">
+        	<input type="email" class="form-control" placeholder="Email address" name="txtemail" required />
+        </div>
      	<hr />
         <button class="btn btn-danger btn-primary" type="submit" name="btn-submit">Generate new Password</button>
       </form>
+		
+		
+    <!-- /container --><br/><br/>
 
-    </div> <!-- /container -->
-    <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+   
+
+    <?php require_once 'assets/includes/footer.php';?>
   </body>
 </html>

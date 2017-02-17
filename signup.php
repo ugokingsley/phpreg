@@ -1,5 +1,10 @@
+
+
+
+
+
 <?php
-session_start();
+
 require_once 'class.user.php';
 
 $reg_user = new USER();
@@ -15,6 +20,7 @@ if(isset($_POST['btn-signup']))
 	$uname = trim($_POST['txtuname']);
 	$email = trim($_POST['txtemail']);
 	$upass = trim($_POST['txtpass']);
+	$gsm = trim($_POST['txtgsm']);
 	$code = md5(uniqid(rand()));
 	
 	$stmt = $reg_user->runQuery("SELECT * FROM tbl_users WHERE userEmail=:email_id");
@@ -32,7 +38,7 @@ if(isset($_POST['btn-signup']))
 	}
 	else
 	{
-		if($reg_user->register($uname,$email,$upass,$code))
+		if($reg_user->register($uname,$email,$upass,$gsm,$code))
 		{			
 			$id = $reg_user->lasdID();		
 			$key = base64_encode($id);
@@ -66,35 +72,78 @@ if(isset($_POST['btn-signup']))
 	}
 }
 ?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Signup | Coding Cage</title>
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-    <link href="assets/styles.css" rel="stylesheet" media="screen">
-     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-  </head>
-  <body id="login">
-    <div class="container">
-				<?php if(isset($msg)) echo $msg;  ?>
-      <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">Sign Up</h2><hr />
-        <input type="text" class="input-block-level" placeholder="Username" name="txtuname" required />
-        <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
-        <input type="password" class="input-block-level" placeholder="Password" name="txtpass" required />
-     	<hr />
-        <button class="btn btn-large btn-primary" type="submit" name="btn-signup">Sign Up</button>
-        <a href="index.php" style="float:right;" class="btn btn-large">Sign In</a>
-      </form>
 
-    </div> <!-- /container -->
-    <script src="vendors/jquery-1.9.1.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-  </body>
+ <?php require_once 'assets/includes/header.php';?>
+
+
+  <body id="login">
+
+
+
+
+
+
+<div class="content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="page-head-line">Register Below</h4>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                   
+                   <?php if(isset($msg)) echo $msg;  ?>
+      				<form class="form-group" method="post">
+      				<div class="form-group">
+                    	<input type="text" class="form-control" placeholder="Full Name" name="txtuname" required />
+                    </div>
+                    <div class="form-group">
+        				<input type="email" class="form-control" placeholder="Email address" name="txtemail" required />
+        			</div>
+        			<div class="form-group">
+        				<input type="password" class="form-control" placeholder="Password" id="password"  name="txtpass" required />
+        			</div>
+					
+        			<div class="form-group">
+        				<input type="tel" class="form-control" placeholder="Phone Number" id="txtgsm" name="txtgsm" required />
+        			</div>
+					<div class="form-group">
+        				<input type="tel" class="form-control" placeholder="Confirm Phone Number" id="txtgsm_confirm" oninput="check(this)" name="txtgsm" required />
+        			</div>
+					<script language='javascript' type='text/javascript'>
+						function check(input) {
+							if (input.value != document.getElementById('txtgsm').value) {
+								input.setCustomValidity('Phone Number Must be Matching.');
+							} else {
+								// input is valid -- reset the error message
+								input.setCustomValidity('');
+							}
+						}
+					</script>
+        			<button class="btn btn-large btn-primary" type="submit" name="btn-signup"><span class="glyphicon glyphicon-user"></span> &nbsp;Sign Me Up</button>
+
+        			</form>
+                        
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+ <?php require_once 'assets/includes/footer.php';?>
+</body>
 </html>
+
+
+
+
+
+
+

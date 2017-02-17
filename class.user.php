@@ -26,16 +26,17 @@ class USER
 		return $stmt;
 	}
 	
-	public function register($uname,$email,$upass,$code)
+	public function register($uname,$email,$upass,$gsm,$code)
 	{
 		try
 		{							
 			$password = md5($upass);
-			$stmt = $this->conn->prepare("INSERT INTO tbl_users(userName,userEmail,userPass,tokenCode) 
-			                                             VALUES(:user_name, :user_mail, :user_pass, :active_code)");
+			$stmt = $this->conn->prepare("INSERT INTO tbl_users(userName,userEmail,userPass,gsm,tokenCode) 
+			                                             VALUES(:user_name, :user_mail, :user_pass,:gsm, :active_code)");
 			$stmt->bindparam(":user_name",$uname);
 			$stmt->bindparam(":user_mail",$email);
 			$stmt->bindparam(":user_pass",$password);
+			$stmt->bindparam(":gsm",$gsm);
 			$stmt->bindparam(":active_code",$code);
 			$stmt->execute();	
 			return $stmt;
@@ -45,6 +46,68 @@ class USER
 			echo $ex->getMessage();
 		}
 	}
+
+
+
+	public function bitregister($userID,$amt,$wallet,$hashcode,$time_created,$time_expires)
+	{
+		try
+		{							
+			$stmt = $this->conn->prepare("INSERT INTO bitcoin(userID,amt,wallet,hashcode,time_created,time_expires) 
+			                                             VALUES(:user, :amt, :wallet,:hashcode,:time_created,:time_expires)");
+			$stmt->bindparam(":user",$userID);
+			$stmt->bindparam(":amt",$amt);
+			$stmt->bindparam(":wallet",$wallet);
+			$stmt->bindparam(":hashcode",$hashcode);
+			$stmt->bindparam(":time_created",$time_created);
+			$stmt->bindparam(":time_expires",$time_expires);
+			//$stmt->bindparam(":remaining",$remaining);
+			$stmt->execute();	
+			return $stmt;
+		}
+		catch(PDOException $ex)
+		{
+			echo $ex->getMessage();
+		}
+	}
+
+
+
+
+
+
+	public function resultset(){
+		$this->execute();
+		return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+	}
+
+
+
+
+
+	
+
+
+	 //update
+	 public function update($uname,$email,$upass,$code)
+	{
+		try
+		{							
+			$password = md5($upass);
+			$stmt = $this->conn->prepare("UPDATE tbl_users SET userName=:un, userEmail=:ue, userPass=:up WHERE tokenCode=:active_code");
+			$stmt->bindparam(":un",$uname);
+			$stmt->bindparam(":ue",$email);
+			$stmt->bindparam(":up",$password);
+			$stmt->bindparam(":active_code",$code);
+			$stmt->execute();	
+			return $stmt;
+		}
+		catch(PDOException $ex)
+		{
+			echo $ex->getMessage();
+		}
+	}
+	 
 	
 	public function login($email,$upass)
 	{
@@ -119,7 +182,7 @@ class USER
 		$mail->Port       = 465;             
 		$mail->AddAddress($email);
 		$mail->Username="ugokingsley5@gmail.com";  
-		$mail->Password="my pass";            
+		$mail->Password="kingsley5911";            
 		$mail->SetFrom('ugokingsley5@gmail.com','DaetaCity');
 		$mail->AddReplyTo("ugokingsley5@gmail.com","DaetaCity");
 		$mail->Subject    = $subject;
